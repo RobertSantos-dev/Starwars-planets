@@ -5,9 +5,14 @@ import useFetch from '../hooks/useFetch';
 
 function Provider({ children }) {
   const [name, setName] = useState('');
+  const [filterValue, setFilterValue] = useState([]);
   const api = useFetch();
 
-  const value = { setName, filterByName: { name }, api };
+  const value = {
+    filterByName: { name, setName },
+    filterByNumericValues: { filterValue, setFilterValue },
+    api,
+  };
 
   return (
     <AppContext.Provider value={ value }>

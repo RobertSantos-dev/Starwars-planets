@@ -7,10 +7,35 @@ const titleHeader = [
 ];
 
 function Table() {
-  const { api, filterByName: { name } } = useContext(AppContext);
-  const apiFilms = (arr) => arr.map((e, i) => <p key={ i }>{ e }</p>);
+  const {
+    api, filterByName: { name }, filterByNumericValues: { filterValue },
+  } = useContext(AppContext);
 
-  const listFilter = api.filter((e) => e.name.toLowerCase().includes(name.toLowerCase()));
+  const filterNum = (arrApi, arr) => {
+    let list = [];
+    arr.forEach((e) => {
+      const op = [
+        e.comparison === 'maior que',
+        e.comparison === 'menor que',
+        e.comparison === 'igual a',
+      ];
+      const i = op.findIndex((value) => value === true);
+
+      list = arrApi.filter((e2) => {
+        const res = [
+          Number(e2[e.column]) > Number(e.value),
+          Number(e2[e.column]) < Number(e.value),
+          Number(e2[e.column]) === Number(e.value),
+        ];
+        return res[i];
+      });
+    });
+    return list;
+  };
+
+  const apiFilms = (arr) => arr.map((e, i) => <p key={ i }>{ e }</p>);
+  const list = filterValue.length > 0 ? filterNum(api, filterValue) : api;
+  const listSeach = list.filter((e) => e.name.toLowerCase().includes(name.toLowerCase()));
 
   return (
     <table>
@@ -18,7 +43,7 @@ function Table() {
         <tr>{ titleHeader.map((e, i) => <th key={ i }>{ e }</th>) }</tr>
       </thead>
       <tbody>
-        { listFilter.map((e, i) => (
+        { listSeach.map((e, i) => (
           <tr key={ i }>
             <td>{ e.name }</td>
             <td>{ e.rotation_period }</td>

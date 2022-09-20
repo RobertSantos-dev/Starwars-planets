@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 function InputFilter() {
-  const { setName, filterByName: { name } } = useContext(AppContext);
+  const { filterByName: { name, setName } } = useContext(AppContext);
 
   return (
     <section>
