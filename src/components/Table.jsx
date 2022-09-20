@@ -7,8 +7,10 @@ const titleHeader = [
 ];
 
 function Table() {
-  const api = useContext(AppContext);
+  const { api, filterByName: { name } } = useContext(AppContext);
   const apiFilms = (arr) => arr.map((e, i) => <p key={ i }>{ e }</p>);
+
+  const listFilter = api.filter((e) => e.name.toLowerCase().includes(name.toLowerCase()));
 
   return (
     <table>
@@ -16,7 +18,7 @@ function Table() {
         <tr>{ titleHeader.map((e, i) => <th key={ i }>{ e }</th>) }</tr>
       </thead>
       <tbody>
-        { api.map((e, i) => (
+        { listFilter.map((e, i) => (
           <tr key={ i }>
             <td>{ e.name }</td>
             <td>{ e.rotation_period }</td>
