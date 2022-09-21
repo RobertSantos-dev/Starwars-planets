@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 
 import AppContext from '../context/AppContext';
-import {
-  handleClick, handleGeneric, opColumns, opComparison,
-} from '../services/functionFilter';
+import { handleClick, handleGeneric, opComparison } from '../services/functionFilter';
 
 function FilterSearch() {
-  const { filterByNumericValues: { setFilterValue } } = useContext(AppContext);
-  const [columns, setColumns] = useState(opColumns);
+  const {
+    filterByNumericValues: { setFilterValue },
+    selectColumn: { columns, setColumns },
+  } = useContext(AppContext);
   const [options, setOptions] = useState({
     column: columns[0], comparison: opComparison[0], value: '0',
   });

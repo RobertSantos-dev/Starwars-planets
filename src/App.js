@@ -1,8 +1,9 @@
 import React from 'react';
 
 import Provider from './context/Provider';
-import FilterSearch from './components/FilterSearch';
 import InputFilter from './components/InputFilter';
+import FilterSearch from './components/FilterSearch';
+import ListFilter from './components/ListFilter';
 import Table from './components/Table';
 import './styles/App.css';
 
@@ -12,6 +13,8 @@ function App() {
       <InputFilter />
       <hr />
       <FilterSearch />
+      <hr />
+      <ListFilter />
       <hr />
       <Table />
     </Provider>
