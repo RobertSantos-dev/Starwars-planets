@@ -1,4 +1,9 @@
-const filterNum = (arrApi, arr) => {
+export const titleHeader = [
+  'Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate', 'Gravity',
+  'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL',
+];
+
+export const filterNum = (arrApi, arr) => {
   let list = [];
   arr.forEach((e) => {
     const op = [
@@ -19,4 +24,7 @@ const filterNum = (arrApi, arr) => {
   return list;
 };
 
-export default filterNum;
+export const listUpdate = (setListApi, filterValue, api, listApi) => {
+  if (filterValue.length > 0) setListApi(filterNum(listApi, filterValue));
+  else { setListApi(api); }
+};

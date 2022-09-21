@@ -1,24 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 
 import AppContext from '../context/AppContext';
-import filterNum from '../services/functionFilter';
-
-const titleHeader = [
-  'Name', 'Rotation Period', 'Orbital Period', 'Diameter', 'Climate', 'Gravity',
-  'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL',
-];
+import { listUpdate, titleHeader } from '../services/functionTable';
 
 function Table() {
-  const {
-    filterByName: { name },
-    filterByNumericValues: { filterValue },
-    requestApi: { listApi, setListApi },
-    api,
-  } = useContext(AppContext);
+  const { filterByName: { name }, filterByNumericValues: { filterValue },
+    requestApi: { listApi, setListApi }, api } = useContext(AppContext);
 
   useEffect(() => {
-    if (filterValue.length > 0) setListApi(filterNum(listApi, filterValue));
-    else { setListApi(api); }
+    listUpdate(setListApi, filterValue, api, listApi);
   }, [filterValue]);
 
   const apiFilms = (arr) => arr.map((e, i) => <p key={ i }>{ e }</p>);
