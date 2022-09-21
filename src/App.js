@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Provider from './components/Provider';
+import Provider from './context/Provider';
 import FilterSearch from './components/FilterSearch';
 import InputFilter from './components/InputFilter';
 import Table from './components/Table';

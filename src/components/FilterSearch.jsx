@@ -1,28 +1,18 @@
 import React, { useState, useContext } from 'react';
 
 import AppContext from '../context/AppContext';
-
-const options = [
-  ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
-  ['maior que', 'menor que', 'igual a'],
-];
+import {
+  handleClick, handleGeneric, opColumns, opComparison,
+} from '../services/functionFilter';
 
 function FilterSearch() {
   const { filterByNumericValues: { setFilterValue } } = useContext(AppContext);
-  const [optionsState, setOptionsState] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '0',
+  const [columns, setColumns] = useState(opColumns);
+  const [options, setOptions] = useState({
+    column: columns[0], comparison: opComparison[0], value: '0',
   });
 
-  const setStateGeneric = ({ target: { name, value } }) => {
-    setOptionsState((state) => ({ ...state, [name]: value }));
-  };
-
-  const handleClick = () => {
-    setFilterValue((state) => ([...state, optionsState]));
-    setOptionsState({ column: 'population', comparison: 'maior que', value: '0' });
-  };
+  const render = { setFilterValue, setOptions, setColumns, options, columns };
 
   return (
     <section>
@@ -33,10 +23,10 @@ function FilterSearch() {
             id="columnId"
             data-testid="column-filter"
             name="column"
-            value={ optionsState.column }
-            onChange={ setStateGeneric }
+            value={ options.column }
+            onChange={ (e) => handleGeneric(e, setOptions) }
           >
-            { options[0].map((e, i) => <option key={ i } value={ e }>{ e }</option>) }
+            { columns.map((e, i) => <option key={ i } value={ e }>{ e }</option>) }
           </select>
         </label>
       </div>
@@ -47,10 +37,10 @@ function FilterSearch() {
             id="comparisonId"
             data-testid="comparison-filter"
             name="comparison"
-            value={ optionsState.comparison }
-            onChange={ setStateGeneric }
+            value={ options.comparison }
+            onChange={ (e) => handleGeneric(e, setOptions) }
           >
-            { options[1].map((e, i) => <option key={ i } value={ e }>{ e }</option>) }
+            { opComparison.map((e, i) => <option key={ i } value={ e }>{ e }</option>) }
           </select>
         </label>
       </div>
@@ -59,15 +49,15 @@ function FilterSearch() {
           type="number"
           name="value"
           data-testid="value-filter"
-          value={ optionsState.value }
-          onChange={ setStateGeneric }
+          value={ options.value }
+          onChange={ (e) => handleGeneric(e, setOptions) }
         />
       </div>
       <div>
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ handleClick }
+          onClick={ () => handleClick(render) }
         >
           Filtrar
         </button>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import AppContext from '../context/AppContext';
+import AppContext from './AppContext';
 import useFetch from '../hooks/useFetch';
 
 function Provider({ children }) {
