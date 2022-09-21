@@ -19,9 +19,11 @@ const handleGeneric = ({ target: { name, value } }, setOptions) => {
 };
 
 const stateColumns = (arr, arrColumns, setColumns) => {
-  let listOp = [];
-  arr.forEach((e) => { listOp = arrColumns.filter((e2) => e.column !== e2); });
-  setColumns(listOp);
+  setColumns((state) => {
+    let listOp = [];
+    arr.forEach((e) => { listOp = state.filter((e2) => e.column !== e2); });
+    return listOp;
+  });
 };
 
 const handleClick = ({ setFilterValue, setOptions, setColumns, options, columns }) => {

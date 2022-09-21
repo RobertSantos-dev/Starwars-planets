@@ -20,11 +20,13 @@ export const filterNum = (arrApi, arr) => {
       ];
       return res[i];
     });
+    console.log(list);
   });
   return list;
 };
 
-export const listUpdate = (setListApi, filterValue, api, listApi) => {
-  if (filterValue.length > 0) setListApi(filterNum(listApi, filterValue));
-  else { setListApi(api); }
+export const listUpdate = (setListApi, filterValue, api) => {
+  if (filterValue.length > 0) {
+    setListApi((state) => filterNum(state, filterValue));
+  } else { setListApi(api); }
 };

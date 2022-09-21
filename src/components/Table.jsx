@@ -4,12 +4,15 @@ import AppContext from '../context/AppContext';
 import { listUpdate, titleHeader } from '../services/functionTable';
 
 function Table() {
-  const { filterByName: { name }, filterByNumericValues: { filterValue },
-    requestApi: { listApi, setListApi }, api } = useContext(AppContext);
+  const {
+    filterByName: { name }, filterByNumericValues: { filterValue },
+    requestApi: { listApi, setListApi }, api,
+    selectColumn: { columns },
+  } = useContext(AppContext);
 
   useEffect(() => {
-    listUpdate(setListApi, filterValue, api, listApi);
-  }, [filterValue]);
+    listUpdate(setListApi, filterValue, api);
+  }, [filterValue, columns]);
 
   const apiFilms = (arr) => arr.map((e, i) => <p key={ i }>{ e }</p>);
   const list = listApi.filter((e) => e.name.toLowerCase().includes(name.toLowerCase()));

@@ -1,16 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import AppContext from '../context/AppContext';
 import { handleClick, handleGeneric, opComparison } from '../services/functionFilter';
 
 function FilterSearch() {
   const {
-    filterByNumericValues: { setFilterValue },
+    filterByNumericValues: { setFilterValue, FilterValue },
     selectColumn: { columns, setColumns },
   } = useContext(AppContext);
   const [options, setOptions] = useState({
     column: columns[0], comparison: opComparison[0], value: '0',
   });
+
+  useEffect(() => {
+    setOptions({
+      column: columns[0], comparison: opComparison[0], value: '0',
+    });
+  }, [FilterValue, columns]);
 
   const render = { setFilterValue, setOptions, setColumns, options, columns };
 
