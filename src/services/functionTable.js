@@ -20,7 +20,6 @@ export const filterNum = (arrApi, arr) => {
       ];
       return res[i];
     });
-    console.log(list);
   });
   return list;
 };

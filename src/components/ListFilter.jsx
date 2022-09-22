@@ -3,6 +3,7 @@ import AppContext from '../context/AppContext';
 
 import { opColumns } from '../services/functionFilter';
 import { filterNum } from '../services/functionTable';
+import { btnDelete, btnClear } from '../services/functionListFilter';
 
 function ListFilter() {
   const {
@@ -12,22 +13,8 @@ function ListFilter() {
     api,
   } = useContext(AppContext);
 
-  const buttonDelete = ({ target: { parentElement } }) => {
-    const { firstElementChild } = parentElement;
-
-    const newList = columns.filter((e) => e !== firstElementChild.innerHTML);
-    setColumns([...newList, firstElementChild.innerHTML]);
-    setFilterValue((state) => {
-      const newValue = state.filter((e) => e.column !== firstElementChild.innerHTML);
-      setListApi(filterNum(api, newValue));
-      return newValue;
-    });
-  };
-
-  const buttonClear = () => {
-    setFilterValue([]);
-    setColumns(opColumns);
-  };
+  const btnValueDel = { setColumns, setFilterValue, setListApi, api, columns, filterNum };
+  const btnValueClean = { setFilterValue, setColumns, opColumns };
 
   return (
     <section>
@@ -36,13 +23,13 @@ function ListFilter() {
           { filterValue ? filterValue.map((e, i) => (
             <li key={ i } data-testid="filter">
               <span>{e.column}</span>
-              {' | '}
+              |
               <span>{e.comparison}</span>
-              {' | '}
+              |
               <span>{e.value}</span>
               <button
                 type="button"
-                onClick={ buttonDelete }
+                onClick={ ({ target }) => btnDelete(target, btnValueDel) }
               >
                 Excluir
               </button>
@@ -54,7 +41,7 @@ function ListFilter() {
         && (
           <button
             type="button"
-            onClick={ buttonClear }
+            onClick={ () => btnClear(btnValueClean) }
             data-testid="button-remove-filters"
           >
             Resetar filtros
